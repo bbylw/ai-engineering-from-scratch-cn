@@ -1,0 +1,498 @@
+/* ============================================================
+   AI Engineering from Scratch — 中文网站样式
+   ============================================================ */
+
+/* ---- CSS Variables ---- */
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---- Smooth Scrolling ---- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+/* ---- Navigation ---- */
+#navbar {
+  background: rgba(250, 249, 245, 0.85);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid transparent;
+}
+
+#navbar.scrolled {
+  border-bottom-color: rgba(229, 231, 235, 0.6);
+  background: rgba(250, 249, 245, 0.95);
+}
+
+.nav-link {
+  color: #6b7280;
+  text-decoration: none;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color 0.2s var(--ease-out-expo);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: #3553ff;
+  transition: width 0.3s var(--ease-out-expo);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #1a1a1a;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.mobile-nav-link {
+  color: #6b7280;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.4);
+  transition: color 0.2s;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link:focus {
+  color: #1a1a1a;
+}
+
+/* ---- Stat Numbers Animation ---- */
+.stat-number {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Flowchart ---- */
+.flowchart-container {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.flowchart-grid {
+  /* min-width handled by Tailwind min-w-[800px] */
+}
+
+.flow-node {
+  position: relative;
+  padding: 0.85rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.25s var(--ease-out-expo);
+  cursor: default;
+}
+
+.flow-node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(53, 83, 255, 0.08);
+  border-color: rgba(53, 83, 255, 0.25);
+}
+
+.flow-node-num {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.5rem;
+  background: rgba(53, 83, 255, 0.08);
+  color: #3553ff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---- Lesson Beat Cards ---- */
+.lesson-beat-card {
+  transition: all 0.25s var(--ease-out-expo);
+}
+
+.lesson-beat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.highlight-card {
+  border-color: rgba(53, 83, 255, 0.15);
+  background: rgba(53, 83, 255, 0.02);
+}
+
+/* ---- Option Cards ---- */
+.option-card {
+  transition: all 0.25s var(--ease-out-expo);
+}
+
+.option-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* ---- Artifact Cards ---- */
+.artifact-card {
+  transition: all 0.3s var(--ease-out-expo);
+}
+
+.artifact-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(53, 83, 255, 0.08);
+  border-color: rgba(53, 83, 255, 0.2);
+}
+
+/* ---- Phase Accordion ---- */
+.phase-accordion {
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  background: #fff;
+  overflow: hidden;
+  transition: all 0.3s var(--ease-out-expo);
+}
+
+.phase-accordion:hover {
+  border-color: rgba(53, 83, 255, 0.2);
+}
+
+.phase-accordion.open {
+  border-color: rgba(53, 83, 255, 0.25);
+  box-shadow: 0 4px 24px rgba(53, 83, 255, 0.05);
+}
+
+.phase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+  gap: 1rem;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+.phase-header:hover {
+  background: rgba(53, 83, 255, 0.02);
+}
+
+.phase-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.phase-number {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.625rem;
+  background: rgba(53, 83, 255, 0.08);
+  color: #3553ff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.phase-title {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.phase-lesson-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.phase-desc {
+  font-size: 0.8125rem;
+  color: #9ca3af;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: none;
+}
+
+.phase-wip-badge {
+  display: inline-block;
+  font-size: 0.625rem;
+  font-weight: 500;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .phase-desc {
+    display: block;
+  }
+}
+
+.phase-chevron {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  color: #9ca3af;
+  transition: transform 0.3s var(--ease-out-expo);
+}
+
+.phase-accordion.open .phase-chevron {
+  transform: rotate(180deg);
+  color: #3553ff;
+}
+
+.phase-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease-out-expo);
+}
+
+.phase-body-inner {
+  padding: 0 1.25rem 1.25rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+/* ---- Phase Lesson Table ---- */
+.lesson-table {
+  width: 100%;
+  font-size: 0.8125rem;
+  border-collapse: collapse;
+}
+
+.lesson-table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.lesson-table td {
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid #f9fafb;
+  vertical-align: middle;
+}
+
+.lesson-table tr:hover td {
+  background: rgba(53, 83, 255, 0.015);
+}
+
+.lesson-link {
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.lesson-link:hover {
+  color: #3553ff;
+}
+
+.lesson-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  color: #9ca3af;
+  text-align: center;
+  width: 2rem;
+}
+
+.lesson-type {
+  font-size: 0.6875rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+}
+
+.lesson-type.build {
+  background: rgba(53, 83, 255, 0.08);
+  color: #3553ff;
+}
+
+.lesson-type.learn {
+  background: rgba(107, 114, 128, 0.08);
+  color: #6b7280;
+}
+
+.lesson-lang {
+  font-size: 0.6875rem;
+  color: #9ca3af;
+}
+
+/* ---- Code Block Scrollbar ---- */
+pre {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+/* ---- Stagger Animation ---- */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
+}
+
+.stagger-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Focus Rings ---- */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #3553ff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---- prefers-reduced-motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---- Mobile Responsive ---- */
+@media (max-width: 640px) {
+  .flowchart-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .phase-header {
+    padding: 0.875rem 1rem;
+  }
+
+  .phase-body-inner {
+    padding: 0 1rem 1rem;
+    overflow-x: auto;
+  }
+
+  .lesson-table th,
+  .lesson-table td {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* ---- Scroll Progress Bar ---- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: #3553ff;
+  z-index: 100;
+  transition: width 0.1s linear;
+}
+
+/* ---- Back to Top Button ---- */
+.back-to-top {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.75rem;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: all 0.3s var(--ease-out-expo);
+  z-index: 50;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  border-color: #3553ff;
+  box-shadow: 0 4px 20px rgba(53, 83, 255, 0.12);
+}
+
+/* ---- Table overflow on mobile ---- */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+}
+
+/* ---- Loading skeleton for phases ---- */
+.skeleton {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: 0.5rem;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

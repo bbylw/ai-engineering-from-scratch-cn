@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="从零开始的 AI 工程——435 节课，20 个阶段。免费、开源、MIT 许可证。亲手构建 AI，端到端。">
+  <title>从零开始的 AI 工程 | AI Engineering from Scratch</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans SC"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', '"Fira Code"', 'Consolas', 'monospace'],
+            display: ['"DM Serif Display"', '"Noto Serif SC"', 'Georgia', 'serif'],
+          },
+          colors: {
+            paper: '#faf9f5',
+            ink: '#1a1a1a',
+            accent: '#3553ff',
+            muted: '#6b7280',
+            surface: '#f3f4f6',
+            border: '#e5e7eb',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-paper text-ink font-sans antialiased">
+
+  <!-- Navigation -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="#" class="font-display text-xl tracking-tight text-ink no-underline">
+          AI Engineering <span class="text-accent">从零开始</span>
+        </a>
+        <div class="hidden lg:flex items-center gap-6 text-sm font-medium">
+          <a href="#how-it-works" class="nav-link">运作方式</a>
+          <a href="#curriculum" class="nav-link">课程结构</a>
+          <a href="#contents" class="nav-link">目录</a>
+          <a href="#toolkit" class="nav-link">工具包</a>
+          <a href="#start" class="nav-link">入门</a>
+          <a href="#contribute" class="nav-link">贡献</a>
+          <a href="#sponsor" class="nav-link">赞助</a>
+        </div>
+        <button id="mobile-menu-btn" class="lg:hidden p-2" aria-label="打开菜单">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-40 bg-paper hidden pt-16">
+    <div class="flex flex-col gap-3 p-6 text-lg font-medium">
+      <a href="#how-it-works" class="mobile-nav-link py-2">运作方式</a>
+      <a href="#curriculum" class="mobile-nav-link py-2">课程结构</a>
+      <a href="#contents" class="mobile-nav-link py-2">目录</a>
+      <a href="#toolkit" class="mobile-nav-link py-2">工具包</a>
+      <a href="#start" class="mobile-nav-link py-2">入门</a>
+      <a href="#contribute" class="mobile-nav-link py-2">贡献</a>
+      <a href="#sponsor" class="mobile-nav-link py-2">赞助</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <header class="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
+      <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent/3 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3"></div>
+      <div class="absolute inset-0 opacity-[0.015]" style="background-image: radial-gradient(circle at 1px 1px, #1a1a1a 1px, transparent 0); background-size: 40px 40px;"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+          435 节课 · 20 个阶段 · MIT 开源
+        </div>
+        <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.1] mb-6">
+          构建 AI，<br>
+          <span class="text-accent">从零开始</span>
+        </h1>
+        <p class="text-lg sm:text-xl text-muted max-w-2xl leading-relaxed mb-8">
+          不调用 API，不复制粘贴。从线性代数到自主群体智能，亲手编写每一行代码。
+          涵盖 Python、TypeScript、Rust、Julia 四种语言。
+        </p>
+        <div class="flex flex-wrap gap-3 mb-10">
+          <a href="#start" class="inline-flex items-center gap-2 px-6 py-3 bg-ink text-paper rounded-xl font-medium text-sm hover:bg-ink/90 transition-all hover:gap-3">
+            开始学习
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
+          </a>
+          <a href="#contents" class="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-xl font-medium text-sm hover:bg-surface transition-all">
+            浏览目录
+          </a>
+        </div>
+        <div class="flex flex-wrap items-center gap-5 text-sm text-muted">
+          <div class="flex items-center gap-2">
+            <span class="font-mono font-bold text-ink">~320h</span> 预估学时
+          </div>
+          <div class="w-px h-4 bg-border"></div>
+          <div class="flex items-center gap-2">
+            <span class="font-mono font-bold text-ink">4</span> 种语言
+          </div>
+          <div class="w-px h-4 bg-border"></div>
+          <div class="flex items-center gap-2">
+            <span class="font-mono font-bold text-ink">435</span> 个可复用产物
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats Bar -->
+  <section class="py-8 border-y border-border/50 bg-surface/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="stat-item">
+          <div class="stat-number font-mono text-3xl font-bold text-accent">435</div>
+          <div class="text-sm text-muted mt-1">节课</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number font-mono text-3xl font-bold text-accent">20</div>
+          <div class="text-sm text-muted mt-1">个阶段</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number font-mono text-3xl font-bold text-accent">~320h</div>
+          <div class="text-sm text-muted mt-1">预估学时</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number font-mono text-3xl font-bold text-accent">MIT</div>
+          <div class="text-sm text-muted mt-1">开源许可证</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <blockquote class="max-w-3xl mx-auto text-center">
+        <p class="font-display text-2xl md:text-3xl leading-relaxed text-ink/80 mb-4">
+          "84% 的学生已经在使用 AI 工具，但只有 18% 的人觉得自己做好了专业使用的准备。"
+        </p>
+        <p class="text-lg md:text-xl font-medium text-accent">本课程填补了这一差距。</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="how-it-works" class="py-16 md:py-20 bg-ink text-paper">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div>
+          <p class="text-accent/80 font-mono text-sm mb-3">第 1 章</p>
+          <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-6">运作方式</h2>
+          <div class="space-y-4 text-paper/70 leading-relaxed">
+            <p>大多数 AI 教材都是零散地教授知识。这里一篇论文，那里一篇微调文章，某个地方又一个炫酷的智能体演示。这些碎片很难串联起来。</p>
+            <p>本课程是主线。20 个阶段，435 节课，四种语言：Python、TypeScript、Rust、Julia。从线性代数开始，到自主群体智能结束。每个算法都先从原始数学构建。</p>
+            <p>每节课遵循相同的循环：<span class="text-paper/90 font-medium">阅读问题 → 推导数学 → 编写代码 → 运行测试 → 保留产物。</span></p>
+          </div>
+        </div>
+        <div class="lesson-loop p-6 rounded-2xl bg-paper/5 border border-paper/10">
+          <p class="text-xs text-paper/40 font-mono mb-4 uppercase tracking-wider">课程循环</p>
+          <div class="flex flex-col gap-3">
+            <div class="loop-step flex items-center gap-3 p-3 rounded-xl bg-paper/5">
+              <span class="w-8 h-8 rounded-lg bg-accent/30 flex items-center justify-center font-mono text-sm font-bold text-accent">1</span>
+              <span class="text-sm text-paper/80">阅读问题</span>
+            </div>
+            <div class="loop-step flex items-center gap-3 p-3 rounded-xl bg-paper/5">
+              <span class="w-8 h-8 rounded-lg bg-accent/30 flex items-center justify-center font-mono text-sm font-bold text-accent">2</span>
+              <span class="text-sm text-paper/80">推导数学</span>
+            </div>
+            <div class="loop-step flex items-center gap-3 p-3 rounded-xl bg-paper/5">
+              <span class="w-8 h-8 rounded-lg bg-accent/30 flex items-center justify-center font-mono text-sm font-bold text-accent">3</span>
+              <span class="text-sm text-paper/80">编写代码</span>
+            </div>
+            <div class="loop-step flex items-center gap-3 p-3 rounded-xl bg-paper/5">
+              <span class="w-8 h-8 rounded-lg bg-accent/30 flex items-center justify-center font-mono text-sm font-bold text-accent">4</span>
+              <span class="text-sm text-paper/80">运行测试</span>
+            </div>
+            <div class="loop-step flex items-center gap-3 p-3 rounded-xl bg-paper/5">
+              <span class="w-8 h-8 rounded-lg bg-accent/30 flex items-center justify-center font-mono text-sm font-bold text-accent">5</span>
+              <span class="text-sm text-paper/80">保留产物</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Curriculum Flowchart -->
+  <section id="curriculum" class="py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-accent font-mono text-sm mb-3">第 2 章</p>
+      <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-6">课程结构</h2>
+      <p class="text-muted max-w-2xl leading-relaxed mb-10">
+        二十个阶段层层递进。数学是地基，智能体与生产部署是屋顶。如果你已经掌握了底层内容，可以跳过去，但不要跳过后又疑惑为什么顶层的东西出问题了。
+      </p>
+      <!-- Flowchart visual -->
+      <div class="flowchart-container overflow-x-auto pb-4">
+        <div class="flowchart-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3 min-w-[800px]">
+          <div class="flow-node phase-0"><span class="flow-node-num">P0</span><span>环境搭建与工具</span></div>
+          <div class="flow-node phase-1"><span class="flow-node-num">P1</span><span>数学基础</span></div>
+          <div class="flow-node phase-2"><span class="flow-node-num">P2</span><span>ML 基础</span></div>
+          <div class="flow-node phase-3"><span class="flow-node-num">P3</span><span>深度学习核心</span></div>
+          <div class="flow-node phase-4"><span class="flow-node-num">P4</span><span>计算机视觉</span></div>
+          <div class="flow-node phase-5"><span class="flow-node-num">P5</span><span>NLP</span></div>
+          <div class="flow-node phase-6"><span class="flow-node-num">P6</span><span>语音与音频</span></div>
+          <div class="flow-node phase-7"><span class="flow-node-num">P7</span><span>Transformer 深入</span></div>
+          <div class="flow-node phase-8"><span class="flow-node-num">P8</span><span>生成式 AI</span></div>
+          <div class="flow-node phase-9"><span class="flow-node-num">P9</span><span>强化学习</span></div>
+          <div class="flow-node phase-10"><span class="flow-node-num">P10</span><span>从零构建 LLM</span></div>
+          <div class="flow-node phase-11"><span class="flow-node-num">P11</span><span>LLM 工程</span></div>
+          <div class="flow-node phase-12"><span class="flow-node-num">P12</span><span>多模态 AI</span></div>
+          <div class="flow-node phase-13"><span class="flow-node-num">P13</span><span>工具与协议</span></div>
+          <div class="flow-node phase-14"><span class="flow-node-num">P14</span><span>智能体工程</span></div>
+          <div class="flow-node phase-15"><span class="flow-node-num">P15</span><span>自主系统</span></div>
+          <div class="flow-node phase-16"><span class="flow-node-num">P16</span><span>多智能体与群体</span></div>
+          <div class="flow-node phase-17"><span class="flow-node-num">P17</span><span>基础设施与生产</span></div>
+          <div class="flow-node phase-18"><span class="flow-node-num">P18</span><span>伦理与对齐</span></div>
+          <div class="flow-node phase-19"><span class="flow-node-num">P19</span><span>毕业项目</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson Structure -->
+  <section class="py-16 md:py-20 bg-surface/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-accent font-mono text-sm mb-3">第 3 章</p>
+      <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-6">每节课的结构</h2>
+      <p class="text-muted max-w-2xl leading-relaxed mb-10">
+        每节课都在自己的文件夹中，整个课程采用统一的结构。六步走：核心思想 → 问题 → 概念 → 构建它 → 使用它 → 交付它。
+      </p>
+      <!-- Lesson beats -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="lesson-beat-card p-5 rounded-2xl bg-paper border border-border">
+          <div class="font-mono text-xs text-accent mb-2">第 1 步</div>
+          <h3 class="font-bold text-lg mb-1">核心思想</h3>
+          <p class="text-sm text-muted">一句话的核心概念，让你快速抓住要点</p>
+        </div>
+        <div class="lesson-beat-card p-5 rounded-2xl bg-paper border border-border">
+          <div class="font-mono text-xs text-accent mb-2">第 2 步</div>
+          <h3 class="font-bold text-lg mb-1">问题</h3>
+          <p class="text-sm text-muted">具体痛点——为什么要学这个？</p>
+        </div>
+        <div class="lesson-beat-card p-5 rounded-2xl bg-paper border border-border">
+          <div class="font-mono text-xs text-accent mb-2">第 3 步</div>
+          <h3 class="font-bold text-lg mb-1">概念</h3>
+          <p class="text-sm text-muted">图解与直觉——建立心智模型</p>
+        </div>
+        <div class="lesson-beat-card p-5 rounded-2xl bg-paper border border-border highlight-card">
+          <div class="font-mono text-xs text-accent mb-2">第 4 步</div>
+          <h3 class="font-bold text-lg mb-1">构建它</h3>
+          <p class="text-sm text-muted">纯数学，无框架——亲手实现算法</p>
+        </div>
+        <div class="lesson-beat-card p-5 rounded-2xl bg-paper border border-border highlight-card">
+          <div class="font-mono text-xs text-accent mb-2">第 5 步</div>
+          <h3 class="font-bold text-lg mb-1">使用它</h3>
+          <p class="text-sm text-muted">用 PyTorch / sklearn 实现相同功能</p>
+        </div>
+        <div class="lesson-beat-card p-5 rounded-2xl bg-paper border border-border">
+          <div class="font-mono text-xs text-accent mb-2">第 6 步</div>
+          <h3 class="font-bold text-lg mb-1">交付它</h3>
+          <p class="text-sm text-muted">产出提示词 · 技能 · 智能体 · MCP</p>
+        </div>
+      </div>
+      <!-- Folder structure -->
+      <div class="mt-10 p-5 rounded-2xl bg-ink text-paper font-mono text-sm leading-relaxed overflow-x-auto">
+        <pre class="text-paper/70">phases/&lt;NN&gt;-&lt;phase-name&gt;/&lt;NN&gt;-&lt;lesson-name&gt;/
+├── <span class="text-accent">code/</span>     可运行的实现（Python、TypeScript、Rust、Julia）
+├── <span class="text-accent">docs/</span>
+│   └── en.md  课程讲义
+└── <span class="text-accent">outputs/</span>  本节课产出的提示词、技能、智能体或 MCP 服务器</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Getting Started -->
+  <section id="start" class="py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-accent font-mono text-sm mb-3">第 4 章</p>
+      <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-6">入门指南</h2>
+      <p class="text-muted max-w-2xl leading-relaxed mb-8">三种方式入门，任选其一。</p>
+      <div class="grid md:grid-cols-3 gap-5 mb-12">
+        <div class="option-card p-6 rounded-2xl border border-border bg-paper">
+          <div class="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent font-mono font-bold mb-4">A</div>
+          <h3 class="font-bold text-lg mb-2">阅读</h3>
+          <p class="text-sm text-muted leading-relaxed mb-4">在网站上打开任何已完成的课程，展开某个阶段。无需配置，无需克隆。</p>
+          <a href="https://aiengineeringfromscratch.com" class="text-accent text-sm font-medium hover:underline inline-flex items-center gap-1" target="_blank" rel="noopener">
+            aiengineeringfromscratch.com
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M3.5 1.5h7v7M8.5 3.5l-7 7"></path></svg>
+          </a>
+        </div>
+        <div class="option-card p-6 rounded-2xl border border-border bg-paper">
+          <div class="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent font-mono font-bold mb-4">B</div>
+          <h3 class="font-bold text-lg mb-2">克隆并运行</h3>
+          <p class="text-sm text-muted leading-relaxed mb-4">Clone 仓库，直接运行 Python 代码，亲手体验每个算法。</p>
+          <code class="block text-xs p-3 rounded-lg bg-ink text-paper/70 font-mono break-all">git clone https://github.com/rohitg00/ai-engineering-from-scratch.git</code>
+        </div>
+        <div class="option-card p-6 rounded-2xl border-2 border-accent bg-accent/5 relative">
+          <span class="absolute -top-3 right-4 px-2 py-0.5 rounded-full bg-accent text-white text-xs font-medium">推荐</span>
+          <div class="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center text-accent font-mono font-bold mb-4">C</div>
+          <h3 class="font-bold text-lg mb-2">找到你的水平</h3>
+          <p class="text-sm text-muted leading-relaxed mb-4">十个问题的定位测验，智能跳过已掌握内容，构建个性化学习路径。</p>
+          <code class="block text-xs p-3 rounded-lg bg-ink text-paper/70 font-mono">/find-your-level</code>
+        </div>
+      </div>
+      <!-- Prerequisites & Skills -->
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="font-display text-xl mb-3">先决条件</h3>
+          <ul class="space-y-2 text-muted text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent mt-1">•</span> 你会写代码（任何语言；Python 会有帮助）</li>
+            <li class="flex items-start gap-2"><span class="text-accent mt-1">•</span> 你想理解 AI <strong class="text-ink">实际是如何工作的</strong>，而不仅仅是调用 API</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display text-xl mb-3">内置智能体技能</h3>
+          <div class="space-y-2 text-sm">
+            <div class="p-3 rounded-xl bg-surface">
+              <code class="text-accent font-mono text-xs">/find-your-level</code>
+              <p class="text-muted mt-1">十个问题的定位测验，生成个性化学习路径</p>
+            </div>
+            <div class="p-3 rounded-xl bg-surface">
+              <code class="text-accent font-mono text-xs">/check-understanding &lt;phase&gt;</code>
+              <p class="text-muted mt-1">每个阶段的测验，八个问题，附反馈</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Every Lesson Ships Something -->
+  <section class="py-16 md:py-20 bg-surface/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-accent font-mono text-sm mb-3">第 5 章</p>
+      <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-6">每节课都有产出</h2>
+      <p class="text-muted max-w-2xl leading-relaxed mb-10">
+        其他课程结束时说"恭喜你，你学会了 X"。而这里的每节课都以一个<strong class="text-ink">可复用工具</strong>结束，你可以安装或粘贴到日常工作流中。
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        <div class="artifact-card p-6 rounded-2xl bg-paper border border-border text-center">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-accent/10 flex items-center justify-center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3553ff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/></svg>
+          </div>
+          <h3 class="font-bold mb-1">提示词</h3>
+          <p class="text-xs text-muted">粘贴到任何 AI 助手中，获得专家级帮助</p>
+        </div>
+        <div class="artifact-card p-6 rounded-2xl bg-paper border border-border text-center">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-accent/10 flex items-center justify-center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3553ff" stroke-width="2"><polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5"/><line x1="12" y1="22" x2="12" y2="15.5"/></svg>
+          </div>
+          <h3 class="font-bold mb-1">技能</h3>
+          <p class="text-xs text-muted">放入 Claude、Cursor 等智能体中</p>
+        </div>
+        <div class="artifact-card p-6 rounded-2xl bg-paper border border-border text-center">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-accent/10 flex items-center justify-center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3553ff" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="21"/><line x1="3" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="21" y2="12"/></svg>
+          </div>
+          <h3 class="font-bold mb-1">智能体</h3>
+          <p class="text-xs text-muted">作为自主工作者部署</p>
+        </div>
+        <div class="artifact-card p-6 rounded-2xl bg-paper border border-border text-center">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-accent/10 flex items-center justify-center">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3553ff" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          </div>
+          <h3 class="font-bold mb-1">MCP 服务器</h3>
+          <p class="text-xs text-muted">插入兼容 MCP 的客户端</p>
+        </div>
+      </div>
+      <!-- Code Example -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="rounded-2xl border border-border bg-paper overflow-hidden">
+          <div class="px-4 py-2 bg-surface border-b border-border flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+            <span class="text-xs text-muted ml-2 font-mono">code/agent_loop.py <span class="text-accent/60">· 构建它</span></span>
+          </div>
+          <pre class="p-4 text-xs font-mono leading-relaxed overflow-x-auto text-ink/80"><span class="text-accent">def</span> <span class="text-ink font-bold">run</span>(query, tools):
+    history = [user(query)]
+    <span class="text-accent">for</span> step <span class="text-accent">in</span> range(MAX_STEPS):
+        msg = llm(history)
+        <span class="text-accent">if</span> msg.tool_calls:
+            <span class="text-accent">for</span> call <span class="text-accent">in</span> msg.tool_calls:
+                result = tools[call.name](**call.args)
+                history.append(tool_result(call.id, result))
+            <span class="text-accent">continue</span>
+        <span class="text-accent">return</span> msg.content
+    <span class="text-accent">raise</span> StepLimitExceeded</pre>
+        </div>
+        <div class="rounded-2xl border border-border bg-paper overflow-hidden">
+          <div class="px-4 py-2 bg-surface border-b border-border flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+            <span class="text-xs text-muted ml-2 font-mono">outputs/skill-agent-loop.md <span class="text-accent/60">· 交付它</span></span>
+          </div>
+          <pre class="p-4 text-xs font-mono leading-relaxed overflow-x-auto text-ink/80"><span class="text-muted">---</span>
+<span class="text-ink">name:</span> agent-loop
+<span class="text-ink">description:</span> ReAct 风格循环
+<span class="text-ink">phase:</span> 14
+<span class="text-ink">lesson:</span> 01
+<span class="text-muted">---</span>
+
+实现一个最小的智能体循环，
+适用于任何工具列表的
+ReAct 风格循环...</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where to Start -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-accent font-mono text-sm mb-3">第 6 章</p>
+      <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-8">从哪里开始</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-border">
+              <th class="text-left py-3 px-4 font-medium text-muted">背景</th>
+              <th class="text-left py-3 px-4 font-medium text-muted">起始阶段</th>
+              <th class="text-right py-3 px-4 font-medium text-muted">预估时间</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/50">
+            <tr class="hover:bg-surface/50 transition-colors">
+              <td class="py-3 px-4">编程和 AI 新手</td>
+              <td class="py-3 px-4"><span class="px-2 py-1 rounded-md bg-accent/10 text-accent text-xs font-mono">阶段 0</span> 环境搭建</td>
+              <td class="py-3 px-4 text-right font-mono text-muted">~306h</td>
+            </tr>
+            <tr class="hover:bg-surface/50 transition-colors">
+              <td class="py-3 px-4">会 Python，ML 新手</td>
+              <td class="py-3 px-4"><span class="px-2 py-1 rounded-md bg-accent/10 text-accent text-xs font-mono">阶段 1</span> 数学基础</td>
+              <td class="py-3 px-4 text-right font-mono text-muted">~270h</td>
+            </tr>
+            <tr class="hover:bg-surface/50 transition-colors">
+              <td class="py-3 px-4">会 ML，深度学习新手</td>
+              <td class="py-3 px-4"><span class="px-2 py-1 rounded-md bg-accent/10 text-accent text-xs font-mono">阶段 3</span> 深度学习核心</td>
+              <td class="py-3 px-4 text-right font-mono text-muted">~200h</td>
+            </tr>
+            <tr class="hover:bg-surface/50 transition-colors">
+              <td class="py-3 px-4">会深度学习，想学 LLM 和智能体</td>
+              <td class="py-3 px-4"><span class="px-2 py-1 rounded-md bg-accent/10 text-accent text-xs font-mono">阶段 10</span> 从零构建 LLM</td>
+              <td class="py-3 px-4 text-right font-mono text-muted">~100h</td>
+            </tr>
+            <tr class="hover:bg-surface/50 transition-colors">
+              <td class="py-3 px-4">资深工程师，只想学智能体工程</td>
+              <td class="py-3 px-4"><span class="px-2 py-1 rounded-md bg-accent/10 text-accent text-xs font-mono">阶段 14</span> 智能体工程</td>
+              <td class="py-3 px-4 text-right font-mono text-muted">~60h</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why This Matters -->
+  <section class="py-16 md:py-20 bg-ink text-paper">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12">
+        <div>
+          <p class="text-accent/80 font-mono text-sm mb-3">第 7 章</p>
+          <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-8">为什么这在当下很重要</h2>
+          <div class="space-y-6">
+            <blockquote class="border-l-2 border-accent/40 pl-4">
+              <p class="text-paper/70 italic">"最热门的新编程语言是英语。"</p>
+              <cite class="text-sm text-paper/40 not-italic">— Andrej Karpathy</cite>
+            </blockquote>
+            <blockquote class="border-l-2 border-accent/40 pl-4">
+              <p class="text-paper/70 italic">"软件工程正在我们眼前被重塑。"</p>
+              <cite class="text-sm text-paper/40 not-italic">— Boris Cherny，Claude Code 创建者</cite>
+            </blockquote>
+            <blockquote class="border-l-2 border-accent/40 pl-4">
+              <p class="text-paper/70 italic">"模型会不断进步。能产生复利的技能是<strong class="text-paper/90">知道要构建什么</strong>。"</p>
+              <cite class="text-sm text-paper/40 not-italic">— 行业共识，2026</cite>
+            </blockquote>
+          </div>
+        </div>
+        <div>
+          <h3 class="font-display text-xl mb-4">涵盖的基础论文</h3>
+          <div class="space-y-3 text-sm">
+            <a href="#phase-7" class="block p-3 rounded-xl bg-paper/5 hover:bg-paper/10 transition-colors border border-paper/5">• <span class="text-paper/70">Attention Is All You Need</span> <span class="text-paper/40">— Vaswani 等, 2017 → 阶段 7</span></a>
+            <a href="#phase-10" class="block p-3 rounded-xl bg-paper/5 hover:bg-paper/10 transition-colors border border-paper/5">• <span class="text-paper/70">Language Models are Few-Shot Learners (GPT-3)</span> <span class="text-paper/40">→ 阶段 10</span></a>
+            <a href="#phase-8" class="block p-3 rounded-xl bg-paper/5 hover:bg-paper/10 transition-colors border border-paper/5">• <span class="text-paper/70">Denoising Diffusion Probabilistic Models</span> <span class="text-paper/40">→ 阶段 8</span></a>
+            <a href="#phase-10" class="block p-3 rounded-xl bg-paper/5 hover:bg-paper/10 transition-colors border border-paper/5">• <span class="text-paper/70">InstructGPT / RLHF</span> <span class="text-paper/40">→ 阶段 10</span></a>
+            <a href="#phase-10" class="block p-3 rounded-xl bg-paper/5 hover:bg-paper/10 transition-colors border border-paper/5">• <span class="text-paper/70">Direct Preference Optimization</span> <span class="text-paper/40">→ 阶段 10</span></a>
+            <a href="#phase-14" class="block p-3 rounded-xl bg-paper/5 hover:bg-paper/10 transition-colors border border-paper/5">• <span class="text-paper/70">ReAct: Reasoning + Acting in LLMs</span> <span class="text-paper/40">→ 阶段 14</span></a>
+            <a href="#phase-13" class="block p-3 rounded-xl bg-paper/5 hover:bg-paper/10 transition-colors border border-paper/5">• <span class="text-paper/70">Model Context Protocol</span> <span class="text-paper/40">— Anthropic → 阶段 13</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contents - 20 Phases -->
+  <section id="contents" class="py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-accent font-mono text-sm mb-3">完整目录</p>
+      <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-2">课程目录</h2>
+      <p class="text-muted mb-10">二十个阶段。点击展开查看每节课。</p>
+      <div class="space-y-3" id="phases-container">
+        <!-- Phases injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Toolkit -->
+  <section id="toolkit" class="py-16 md:py-20 bg-surface/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-accent font-mono text-sm mb-3">第 8 章</p>
+      <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-6">工具包</h2>
+      <p class="text-muted max-w-2xl leading-relaxed mb-8">
+        每节课都产出一个可复用产物。课程结束时你将拥有 378 个技能和 99 个提示词。
+      </p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="p-6 rounded-2xl bg-paper border border-border">
+          <h3 class="font-bold text-lg mb-3">安装所有课程技能</h3>
+          <div class="space-y-2 font-mono text-xs">
+            <div class="p-2 rounded-lg bg-ink text-paper/70">python3 scripts/install_skills.py ~/.claude/skills</div>
+            <div class="p-2 rounded-lg bg-ink text-paper/70">python3 scripts/install_skills.py ./out --type all</div>
+            <div class="p-2 rounded-lg bg-ink text-paper/70">python3 scripts/install_skills.py ./out --phase 14</div>
+            <div class="p-2 rounded-lg bg-ink text-paper/70">python3 scripts/install_skills.py ./out --tag rag</div>
+          </div>
+        </div>
+        <div class="p-6 rounded-2xl bg-paper border border-border">
+          <h3 class="font-bold text-lg mb-3">部署智能体工作台</h3>
+          <div class="space-y-2 font-mono text-xs">
+            <div class="p-2 rounded-lg bg-ink text-paper/70">python3 scripts/scaffold_workbench.py path/to/repo</div>
+            <div class="p-2 rounded-lg bg-ink text-paper/70">python3 scripts/scaffold_workbench.py path/to/repo --minimal</div>
+            <div class="p-2 rounded-lg bg-ink text-paper/70">python3 scripts/scaffold_workbench.py path/to/repo --dry-run</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-3xl mx-auto text-center px-4">
+      <h2 class="font-display text-3xl md:text-5xl tracking-tight mb-4">准备好从零构建 AI 了吗？</h2>
+      <p class="text-muted text-lg mb-8">免费、开源、MIT 许可证。435 节课等你来挑战。</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-8 py-4 bg-ink text-paper rounded-xl font-medium hover:bg-ink/90 transition-all hover:gap-3">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub 仓库
+        </a>
+        <a href="#contents" class="inline-flex items-center gap-2 px-8 py-4 border border-border rounded-xl font-medium hover:bg-surface transition-all">
+          浏览课程目录
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contributing -->
+  <section id="contribute" class="py-16 md:py-20 bg-surface/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-8">贡献</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/CONTRIBUTING.md" class="p-5 rounded-2xl bg-paper border border-border hover:border-accent/30 transition-colors group">
+          <h3 class="font-bold mb-1 group-hover:text-accent transition-colors">贡献课程或修复</h3>
+          <p class="text-sm text-muted">CONTRIBUTING.md</p>
+        </a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/FORKING.md" class="p-5 rounded-2xl bg-paper border border-border hover:border-accent/30 transition-colors group">
+          <h3 class="font-bold mb-1 group-hover:text-accent transition-colors">Fork 团队或学校版</h3>
+          <p class="text-sm text-muted">FORKING.md</p>
+        </a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/LESSON_TEMPLATE.md" class="p-5 rounded-2xl bg-paper border border-border hover:border-accent/30 transition-colors group">
+          <h3 class="font-bold mb-1 group-hover:text-accent transition-colors">课程模板</h3>
+          <p class="text-sm text-muted">LESSON_TEMPLATE.md</p>
+        </a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/ROADMAP.md" class="p-5 rounded-2xl bg-paper border border-border hover:border-accent/30 transition-colors group">
+          <h3 class="font-bold mb-1 group-hover:text-accent transition-colors">追踪进度</h3>
+          <p class="text-sm text-muted">ROADMAP.md</p>
+        </a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/glossary/terms.md" class="p-5 rounded-2xl bg-paper border border-border hover:border-accent/30 transition-colors group">
+          <h3 class="font-bold mb-1 group-hover:text-accent transition-colors">术语表</h3>
+          <p class="text-sm text-muted">glossary/terms.md</p>
+        </a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/CODE_OF_CONDUCT.md" class="p-5 rounded-2xl bg-paper border border-border hover:border-accent/30 transition-colors group">
+          <h3 class="font-bold mb-1 group-hover:text-accent transition-colors">行为准则</h3>
+          <p class="text-sm text-muted">CODE_OF_CONDUCT.md</p>
+        </a>
+      </div>
+      <div class="p-4 rounded-2xl bg-ink text-paper/70 font-mono text-xs">
+        python3 scripts/audit_lessons.py           <span class="text-paper/30"># 整个课程</span>
+        python3 scripts/audit_lessons.py --phase 14  <span class="text-paper/30"># 单个阶段</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsorship -->
+  <section id="sponsor" class="py-16 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-6">赞助这项工作</h2>
+      <p class="text-muted max-w-2xl leading-relaxed mb-8">
+        免费、MIT 许可证、435 节课。课程仅靠赞助维持。55,593 月访问者 · 7.5K GitHub Stars。
+      </p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-border">
+              <th class="text-left py-3 px-4 font-medium text-muted">等级</th>
+              <th class="text-right py-3 px-4 font-medium text-muted">$/月</th>
+              <th class="text-left py-3 px-4 font-medium text-muted">权益</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-border/50">
+            <tr class="hover:bg-surface/50"><td class="py-3 px-4 font-medium">支持者</td><td class="py-3 px-4 text-right font-mono">$25</td><td class="py-3 px-4 text-muted">列入 BACKERS.md</td></tr>
+            <tr class="hover:bg-surface/50"><td class="py-3 px-4 font-medium">铜牌</td><td class="py-3 px-4 text-right font-mono">$250</td><td class="py-3 px-4 text-muted">README 赞助商区块 + 发布日推文</td></tr>
+            <tr class="hover:bg-surface/50"><td class="py-3 px-4 font-medium">银牌</td><td class="py-3 px-4 text-right font-mono">$750</td><td class="py-3 px-4 text-muted">小 logo + API 课程中列为支持的提供商</td></tr>
+            <tr class="hover:bg-surface/50"><td class="py-3 px-4 font-medium">金牌</td><td class="py-3 px-4 text-right font-mono">$2,000</td><td class="py-3 px-4 text-muted">中等 logo + 赞助商页面 + 季度联合专题</td></tr>
+            <tr class="hover:bg-surface/50"><td class="py-3 px-4 font-medium">白金</td><td class="py-3 px-4 text-right font-mono">$5,000</td><td class="py-3 px-4 text-muted">Hero logo + 一节专门的集成课程</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 border-t border-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted">
+        <div>© 2026 <a href="https://github.com/rohitg00" class="text-ink font-medium hover:text-accent transition-colors">Rohit Ghumare</a> 与社区维护 · MIT 许可证</div>
+        <div class="flex items-center gap-4">
+          <a href="https://x.com/ghumare64" class="hover:text-accent transition-colors">@ghumare64</a>
+          <span class="text-border">·</span>
+          <a href="https://aiengineeringfromscratch.com" class="hover:text-accent transition-colors">aiengineeringfromscratch.com</a>
+          <span class="text-border">·</span>
+          <a href="https://github.com/rohitg00/ai-engineering-from-scratch" class="hover:text-accent transition-colors">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
